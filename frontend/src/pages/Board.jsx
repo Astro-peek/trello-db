@@ -76,8 +76,8 @@ const Board = () => {
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}><Loader2 className="loading-spinner" size={32} /></div>;
 
   return (
-    <div className="app-container" style={{ background: '#0e1219' }}>
-      <nav className="navbar" style={{ background: 'rgba(14, 18, 25, 0.8)' }}>
+    <div className="app-container">
+      <nav className="navbar">
         <Link to="/dashboard" className="nav-brand">
           <LayoutDashboard className="icon" />
           <span>TrelloAI Board</span>
@@ -116,7 +116,7 @@ const Board = () => {
                       <select 
                         value={issue.status} 
                         onChange={(e) => updateIssueStatus(issue._id, e.target.value)}
-                        style={{ background: 'var(--bg-color-soft)', color: 'var(--text-color)', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '4px 8px', fontSize: '0.75rem', width: '100%' }}
+                        style={{ background: 'rgba(0,0,0,0.5)', color: 'var(--text-color)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '6px 12px', fontSize: '0.75rem', width: '100%', outline: 'none', cursor: 'pointer', appearance: 'none' }}
                       >
                         {COLUMNS.map(c => <option key={c.id} value={c.id}>{c.title}</option>)}
                       </select>
