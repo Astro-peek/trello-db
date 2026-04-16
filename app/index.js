@@ -255,6 +255,19 @@ app.put("/issues", authMiddleware, async (req, res) => {
     res.json({ message: "Issue updated successfully!" });
 })
 
+app.delete("/issues", authMiddleware, async (req, res) => {
+    const { issueId } = req.body;
+    
+    const issue = await issueModel.findById(issueId);
+    if(!issue) {
+        return res.status(404).json({ message: "Issue not found" });
+    }
+
+    await issueModel.findByIdAndDelete(issueId);
+
+    res.json({ message: "Issue deleted successfully!" });
+})
+
 //DELETE -- FIND THE GBUG and fix it
 app.delete("/members", authMiddleware, async (req, res) => {
     const userId = req.userId;

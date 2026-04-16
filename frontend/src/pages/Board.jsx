@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link, useSearchParams } from 'react-router-dom';
-import { LayoutDashboard, ArrowLeft, LogOut, Plus, Loader2, X, MoreVertical } from 'lucide-react';
+import { LayoutDashboard, ArrowLeft, LogOut, Plus, Loader2, X, MoreVertical, Trash2 } from 'lucide-react';
 import api from '../api';
 
 const COLUMNS = [
@@ -66,6 +66,16 @@ const Board = () => {
     }
   };
 
+  const deleteIssue = async (issueId) => {
+    if (!window.confirm("Are you sure you want to delete this completed issue?")) return;
+    try {
+      await api.delete('/issues', { data: { issueId } });
+      fetchIssues();
+    } catch (err) {
+      alert('Failed to delete issue');
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('trello_token');
     navigate('/auth');
@@ -112,14 +122,25 @@ const Board = () => {
                   <div key={issue._id} className="issue-card">
                     <div className="issue-title">{issue.title}</div>
                     <div className="issue-desc">{issue.description}</div>
-                    <div className="issue-actions">
+                    <div className="issue-actions" style={{ display: 'flex', gap: '8px' }}>
                       <select
                         value={issue.status}
                         onChange={(e) => updateIssueStatus(issue._id, e.target.value)}
-                        style={{ background: 'rgba(0,0,0,0.5)', color: 'var(--text-color)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '6px 12px', fontSize: '0.75rem', width: '100%', outline: 'none', cursor: 'pointer', appearance: 'none' }}
+                        style={{ flex: 1, background: 'rgba(0,0,0,0.5)', color: 'var(--text-color)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '6px 12px', fontSize: '0.75rem', outline: 'none', cursor: 'pointer', appearance: 'none' }}
                       >
                         {COLUMNS.map(c => <option key={c.id} value={c.id}>{c.title}</option>)}
                       </select>
+                      
+                      {issue.status === 'done' && (
+                        <button 
+                          className="btn btn-ghost" 
+                          style={{ padding: '6px 8px', color: 'var(--danger-color)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: '8px' }}
+                          onClick={() => deleteIssue(issue._id)}
+                          title="Delete issue"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
