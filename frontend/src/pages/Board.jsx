@@ -83,10 +83,10 @@ const Board = () => {
           <span>TrelloAI Board</span>
         </Link>
         <div className="nav-actions">
-           <button className="btn btn-primary" onClick={() => setShowCreateModal(true)}>
+          <button className="btn btn-primary" onClick={() => setShowCreateModal(true)}>
             <Plus size={16} /> New Issue
           </button>
-           <button className="btn btn-ghost" onClick={logout}>
+          <button className="btn btn-ghost" onClick={logout}>
             <LogOut size={16} /> Logout
           </button>
         </div>
@@ -113,8 +113,8 @@ const Board = () => {
                     <div className="issue-title">{issue.title}</div>
                     <div className="issue-desc">{issue.description}</div>
                     <div className="issue-actions">
-                      <select 
-                        value={issue.status} 
+                      <select
+                        value={issue.status}
                         onChange={(e) => updateIssueStatus(issue._id, e.target.value)}
                         style={{ background: 'rgba(0,0,0,0.5)', color: 'var(--text-color)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '6px 12px', fontSize: '0.75rem', width: '100%', outline: 'none', cursor: 'pointer', appearance: 'none' }}
                       >
